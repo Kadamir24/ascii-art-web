@@ -1,0 +1,36 @@
+<canvas id="c"></canvas>
+<div class="container">
+  
+    <label for="fonts">Choose a font:</label>
+    <select id="fontsSelect" name="font"></select>
+    <div>
+        <label for="text">Enter text</label>
+        <input type="InputText" id="InputText" name="text" placeholder="Введите текст на латинице">
+    </div>
+
+    <li>
+        <pre  type="OutputText" id="OutputText" placeholder="Выходная форма"></pre>
+    </li>
+
+    <li>
+        <a class="button1" id="submit">Lets Rock!</a>
+    </li>
+</div>
+<script>
+        $("#submit").on("click", function(e) {
+        var InputText = $("#InputText").val();
+        var fontsSelect = $("#fontsSelect").val();
+        $.ajax({
+          url: "/ascii/",
+          type: "POST",
+          data: JSON.stringify({'font':fontsSelect, "text":InputText}),
+          success: function(results) {
+            $("pre").html(results);
+          },
+          error: function(result) {
+            console.log(result);
+            $("pre").html(result.responseText);
+          }
+        });
+      });
+</script>
